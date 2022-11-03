@@ -18,12 +18,15 @@ function App() {
   const [Mobile, setMobile] = useState("");
   const [email, setEmail] = useState("");
 
-  console.log(
-    "vndfdhghhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh",
-    fullName,
-    Mobile,
-    email
-  );
+  console.log(fullName, Mobile, email);
+
+  const handleJoinVideoCall = () => {
+    setInCall(true);
+    // setTimeout(() => {
+    //   setFullName("");
+    // }, 5000);
+  };
+
   return (
     <div className="App" style={{ height: "100%" }}>
       {inCall ? (
@@ -71,10 +74,9 @@ function App() {
               <TextField
                 variant="outlined"
                 margin="dense"
-                required
                 fullWidth
                 name="email"
-                label="Email"
+                label="Email(Optional)"
                 type="email"
                 id="email"
                 value={email}
@@ -88,7 +90,7 @@ function App() {
                     style={{ marginTop: "24px" }}
                     variant="contained"
                     color="primary"
-                    onClick={() => setInCall(true)}
+                    onClick={handleJoinVideoCall}
                   >
                     Join Call
                   </Button>

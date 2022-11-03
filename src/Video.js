@@ -3,7 +3,7 @@ import { Grid, Box, Card, Typography } from "@material-ui/core";
 import { useState, useEffect } from "react";
 
 export default function Video(props) {
-  const { users, tracks } = props;
+  const { users, tracks, fullName } = props;
   const [gridSpacing, setGridSpacing] = useState(12);
 
   useEffect(() => {
@@ -38,7 +38,7 @@ export default function Video(props) {
               borderRadius: "4px",
             }}
           >
-            <Typography variant="body2">Vikash Kumar</Typography>
+            <Typography variant="body2"> {fullName} </Typography>
           </Box>
         </AgoraVideoPlayer>
       </Grid>
@@ -78,7 +78,7 @@ export default function Video(props) {
                       borderRadius: "4px",
                     }}
                   >
-                    <Typography variant="body2">{user.userName} </Typography>
+                    <Typography variant="body2">{user.uid} </Typography>
                   </Box>
                 </AgoraVideoPlayer>
               </Grid>

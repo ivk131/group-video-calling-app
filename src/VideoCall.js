@@ -18,8 +18,6 @@ export default function VideoCall(props) {
   const { ready, tracks } = useMicrophoneAndCameraTracks();
 
   useEffect(() => {
-    const userName = "Full Name";
-
     let init = async (name, userName) => {
       client.on("user-published", async (user, mediaType) => {
         user.userName = userName;
@@ -89,7 +87,9 @@ export default function VideoCall(props) {
         }}
       >
         <Grid item style={{ height: "90%", overflow: "hide" }}>
-          {start && tracks && <Video tracks={tracks} users={users} />}
+          {start && tracks && (
+            <Video tracks={tracks} users={users} fullName={fullName} />
+          )}
         </Grid>
         {/* <Toolbar /> */}
 
