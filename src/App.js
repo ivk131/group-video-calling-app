@@ -1,22 +1,102 @@
 import { useState } from "react";
 import { Button } from "@material-ui/core";
 import VideoCall from "./VideoCall";
-
+import {
+  Container,
+  CssBaseline,
+  Avatar,
+  TextField,
+  Paper,
+  Toolbar,
+  Grid,
+  Box,
+  Typography,
+} from "@material-ui/core";
 function App() {
   const [inCall, setInCall] = useState(false);
+  const [fullName, setFullName] = useState("");
+  const [Mobile, setMobile] = useState("");
+  const [email, setEmail] = useState("");
 
+  console.log(
+    "vndfdhghhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh",
+    fullName,
+    Mobile,
+    email
+  );
   return (
     <div className="App" style={{ height: "100%" }}>
       {inCall ? (
-        <VideoCall setInCall={setInCall} />
+        <VideoCall setInCall={setInCall} fullName={fullName} />
       ) : (
-        <Button
-          variant="contained"
-          color="primary"
-          onClick={() => setInCall(true)}
-        >
-          Join Call
-        </Button>
+        <Container component="main" maxWidth="xs">
+          {/* <CssBaseline /> */}
+          <Box
+            className=""
+            component={Paper}
+            p={2}
+            style={{ marginTop: "48px" }}
+          >
+            <Box>
+              <Typography component="h1" variant="h5">
+                Virtual Call
+              </Typography>
+            </Box>
+
+            <form>
+              <TextField
+                variant="outlined"
+                margin="dense"
+                required
+                fullWidth
+                name="fullName"
+                label="Full Name"
+                id="fullName"
+                autoComplete="current-password"
+                value={fullName}
+                onChange={e => setFullName(e.target.value)}
+              />
+              <TextField
+                variant="outlined"
+                margin="dense"
+                required
+                fullWidth
+                name="Mobile"
+                label="Mobile"
+                type="number"
+                id="Mobile"
+                value={Mobile}
+                onChange={e => setMobile(e.target.value)}
+              />
+              <TextField
+                variant="outlined"
+                margin="dense"
+                required
+                fullWidth
+                name="email"
+                label="Email"
+                type="email"
+                id="email"
+                value={email}
+                onChange={e => setEmail(e.target.value)}
+              />
+
+              <Grid container>
+                <Grid item xs>
+                  <Button
+                    disabled={fullName.length === 0 || Mobile.length === 0}
+                    style={{ marginTop: "24px" }}
+                    variant="contained"
+                    color="primary"
+                    onClick={() => setInCall(true)}
+                  >
+                    Join Call
+                  </Button>
+                </Grid>
+              </Grid>
+            </form>
+          </Box>
+        </Container>
       )}
     </div>
   );

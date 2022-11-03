@@ -10,6 +10,7 @@ import Video from "./Video";
 import Controls from "./Controls";
 
 export default function VideoCall(props) {
+  const { fullName } = props;
   const { setInCall } = props;
   const [users, setUsers] = useState([]);
   const [start, setStart] = useState(false);
@@ -17,8 +18,11 @@ export default function VideoCall(props) {
   const { ready, tracks } = useMicrophoneAndCameraTracks();
 
   useEffect(() => {
-    let init = async name => {
+    const userName = "Full Name";
+
+    let init = async (name, userName) => {
       client.on("user-published", async (user, mediaType) => {
+        user.userName = userName;
         await client.subscribe(user, mediaType);
         if (mediaType === "video") {
           setUsers(prevUsers => {
@@ -59,7 +63,7 @@ export default function VideoCall(props) {
 
     if (ready && tracks) {
       try {
-        init(channelName);
+        init(channelName, fullName);
       } catch (error) {
         console.log(error);
       }

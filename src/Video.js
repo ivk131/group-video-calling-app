@@ -11,14 +11,21 @@ export default function Video(props) {
     console.log("gridSpacing", gridSpacing);
   }, [users, tracks]);
 
-  console.log("users, tracks", users, tracks);
+  console.log("users, tracks", users);
 
   return (
     <Grid container style={{ height: "100%" }} spacing={1}>
-      <Grid item xs={6} lg={3} sm={gridSpacing}>
+      <Grid item xs={6} md={3} lg={2} sm={gridSpacing}>
         <AgoraVideoPlayer
           videoTrack={tracks[1]}
-          style={{ height: "100%", width: "100%", position: "relative" }}
+          style={{
+            height: "100%",
+            width: "100%",
+            maxWidth: "250px",
+            maxHeight: "280px",
+
+            position: "relative",
+          }}
         >
           <Box
             style={{
@@ -42,7 +49,8 @@ export default function Video(props) {
               <Grid
                 item
                 xs={6}
-                lg={3}
+                lg={2}
+                md={3}
                 sm={gridSpacing}
                 style={{ minHeight: "230px", borderRadius: "16px" }}
               >
@@ -55,6 +63,8 @@ export default function Video(props) {
                     width: "100%",
                     borderRadius: "16px",
                     background: "#f2f4f6",
+                    maxWidth: "250px",
+                    maxHeight: "280px",
                   }}
                 >
                   <Box
@@ -68,7 +78,7 @@ export default function Video(props) {
                       borderRadius: "4px",
                     }}
                   >
-                    <Typography variant="body2">{user.uid} </Typography>
+                    <Typography variant="body2">{user.userName} </Typography>
                   </Box>
                 </AgoraVideoPlayer>
               </Grid>
