@@ -1,11 +1,13 @@
 import { useState } from "react";
 import { useClient } from "./settings";
-import { Grid, Button, Box } from "@material-ui/core";
+import { Grid, Button, Box, IconButton, Tooltip } from "@material-ui/core";
 import MicIcon from "@material-ui/icons/Mic";
 import MicOffIcon from "@material-ui/icons/MicOff";
 import VideocamIcon from "@material-ui/icons/Videocam";
 import VideocamOffIcon from "@material-ui/icons/VideocamOff";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
+import GroupsIcon from "@material-ui/icons/GroupSharp";
+import CallEndIcon from "@material-ui/icons/CallEnd";
 
 export default function Controls(props) {
   const client = useClient();
@@ -36,36 +38,77 @@ export default function Controls(props) {
   };
 
   return (
-    <Box>
+    <Box
+      style={{ background: "#f2f4f6", borderRadius: "8px" }}
+      p={2}
+      justifyContent="center"
+    >
       <Grid container spacing={2} alignItems="center">
+        <Box flexGrow={0.5} />
         <Grid item>
-          <Button
+          <Tooltip title={trackState.audio ? "Mute" : "Unmute"}>
+            <IconButton
+              variant="contained"
+              color={trackState.audio ? "primary" : "secondary"}
+              onClick={() => mute("audio")}
+            >
+              {trackState.audio ? <MicIcon /> : <MicOffIcon />}
+            </IconButton>
+          </Tooltip>
+
+          {/* <Button
             variant="contained"
             color={trackState.audio ? "primary" : "secondary"}
             onClick={() => mute("audio")}
           >
             {trackState.audio ? <MicIcon /> : <MicOffIcon />}
-          </Button>
+          </Button> */}
         </Grid>
         <Grid item>
-          <Button
+          <Tooltip title={trackState.video ? "Hide" : "Show"}>
+            <IconButton
+              variant="contained"
+              color={trackState.video ? "primary" : "secondary"}
+              onClick={() => mute("video")}
+            >
+              {trackState.video ? <VideocamIcon /> : <VideocamOffIcon />}
+            </IconButton>
+          </Tooltip>
+
+          {/* <Button
             variant="contained"
             color={trackState.video ? "primary" : "secondary"}
             onClick={() => mute("video")}
           >
             {trackState.video ? <VideocamIcon /> : <VideocamOffIcon />}
-          </Button>
+          </Button> */}
         </Grid>
         <Grid item>
-          <Button
-            variant="contained"
+          <IconButton
+            variant="outlined"
+            color="secondary"
+            onClick={() => leaveChannel()}
+          >
+            <CallEndIcon />
+          </IconButton>
+          {/* <Button
+            variant="outlined"
             color="default"
             onClick={() => leaveChannel()}
           >
             Leave
             <ExitToAppIcon />
-          </Button>
+          </Button> */}
         </Grid>
+        <Box pl={3} />
+        <Grid item>
+          <Tooltip title="Participent">
+            <IconButton>
+              <GroupsIcon />
+            </IconButton>
+          </Tooltip>
+        </Grid>
+        <Box flexGrow={0.3} />
       </Grid>
     </Box>
   );

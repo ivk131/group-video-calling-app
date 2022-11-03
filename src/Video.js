@@ -1,5 +1,5 @@
 import { AgoraVideoPlayer } from "agora-rtc-react";
-import { Grid } from "@material-ui/core";
+import { Grid, Box, Card, Typography } from "@material-ui/core";
 import { useState, useEffect } from "react";
 
 export default function Video(props) {
@@ -7,28 +7,70 @@ export default function Video(props) {
   const [gridSpacing, setGridSpacing] = useState(12);
 
   useEffect(() => {
-    setGridSpacing(Math.max(Math.floor(12 / (users.length + 1)), 3));
+    setGridSpacing(Math.max(Math.floor(12 / (users.length + 1)), 4));
     console.log("gridSpacing", gridSpacing);
   }, [users, tracks]);
 
+  console.log("users, tracks", users, tracks);
+
   return (
     <Grid container style={{ height: "100%" }} spacing={1}>
-      <Grid item xs={6} sm={gridSpacing}>
+      <Grid item xs={6} lg={3} sm={gridSpacing}>
         <AgoraVideoPlayer
           videoTrack={tracks[1]}
-          style={{ height: "100%", width: "100%" }}
-        />
+          style={{ height: "100%", width: "100%", position: "relative" }}
+        >
+          <Box
+            style={{
+              position: "absolute",
+              bottom: "1%",
+              left: "2%",
+              zIndex: 1,
+              background: "#fafafa",
+              padding: "2px 4px",
+              borderRadius: "4px",
+            }}
+          >
+            <Typography variant="body2">Vikash Kumar</Typography>
+          </Box>
+        </AgoraVideoPlayer>
       </Grid>
       {users.length > 0 &&
         users.map(user => {
           if (user.videoTrack) {
             return (
-              <Grid item xs={6} sm={gridSpacing} style={{ minHeight: "230px" }}>
+              <Grid
+                item
+                xs={6}
+                lg={3}
+                sm={gridSpacing}
+                style={{ minHeight: "230px", borderRadius: "16px" }}
+              >
                 <AgoraVideoPlayer
                   videoTrack={user.videoTrack}
                   key={user.uid}
-                  style={{ height: "100%", width: "100%" }}
-                />
+                  style={{
+                    position: "relative",
+                    height: "100%",
+                    width: "100%",
+                    borderRadius: "16px",
+                    background: "#f2f4f6",
+                  }}
+                >
+                  <Box
+                    style={{
+                      position: "absolute",
+                      bottom: "1%",
+                      left: "2%",
+                      zIndex: 1,
+                      background: "#fafafa",
+                      padding: "2px 4px",
+                      borderRadius: "4px",
+                    }}
+                  >
+                    <Typography variant="body2">{user.uid} </Typography>
+                  </Box>
+                </AgoraVideoPlayer>
               </Grid>
             );
           } else return null;

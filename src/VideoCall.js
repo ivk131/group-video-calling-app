@@ -5,7 +5,7 @@ import {
   useMicrophoneAndCameraTracks,
   channelName,
 } from "./settings.js";
-import { Grid, Toolbar } from "@material-ui/core";
+import { Grid, Toolbar, Box } from "@material-ui/core";
 import Video from "./Video";
 import Controls from "./Controls";
 
@@ -67,16 +67,38 @@ export default function VideoCall(props) {
   }, [channelName, client, ready, tracks]);
 
   return (
-    <Grid container direction="column" style={{ height: "95%" }}>
-      <Grid item style={{ height: "5%" }}>
-        {ready && tracks && (
-          <Controls tracks={tracks} setStart={setStart} setInCall={setInCall} />
-        )}
+    <Box
+      style={{
+        height: "95%",
+        background: "#454545",
+        borderRadius: "8px",
+      }}
+    >
+      <Grid
+        container
+        direction="column"
+        style={{
+          height: "95%",
+          background: "#454545",
+          padding: "16px",
+          borderRadius: "8px",
+        }}
+      >
+        <Grid item style={{ height: "90%", overflow: "hide" }}>
+          {start && tracks && <Video tracks={tracks} users={users} />}
+        </Grid>
+        {/* <Toolbar /> */}
+
+        <Grid item style={{ height: "5%" }}>
+          {ready && tracks && (
+            <Controls
+              tracks={tracks}
+              setStart={setStart}
+              setInCall={setInCall}
+            />
+          )}
+        </Grid>
       </Grid>
-      <Toolbar />
-      <Grid item style={{ height: "80%" }}>
-        {start && tracks && <Video tracks={tracks} users={users} />}
-      </Grid>
-    </Grid>
+    </Box>
   );
 }
