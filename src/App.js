@@ -14,7 +14,7 @@ import {
 } from "@material-ui/core";
 function App() {
   const [inCall, setInCall] = useState(false);
-  const [fullName, setFullName] = useState("Anish");
+  const [fullName, setFullName] = useState("");
   const [Mobile, setMobile] = useState("");
   const [email, setEmail] = useState("");
 
