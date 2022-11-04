@@ -28,79 +28,76 @@ function App() {
   };
 
   return (
-    <div className="App" style={{ height: "100%" }}>
+    <Box className="App" style={{ height: "100vh", background: "#000" }}>
       {inCall ? (
         <VideoCall setInCall={setInCall} fullName={fullName} />
       ) : (
         <Container component="main" maxWidth="xs">
           {/* <CssBaseline /> */}
-          <Box
-            className=""
-            component={Paper}
-            p={2}
-            style={{ marginTop: "48px" }}
-          >
-            <Box>
-              <Typography component="h1" variant="h5">
-                Virtual Call
-              </Typography>
-            </Box>
+          <Box pt={8}>
+            <Box className="" component={Paper} p={2}>
+              <Box pb={2}>
+                <Typography component="h1" variant="h5">
+                  Virtual Call
+                </Typography>
+              </Box>
 
-            <form>
-              <TextField
-                variant="outlined"
-                margin="dense"
-                required
-                fullWidth
-                name="fullName"
-                label="Full Name"
-                id="fullName"
-                autoComplete="current-password"
-                value={fullName}
-                onChange={e => setFullName(e.target.value)}
-              />
-              <TextField
-                variant="outlined"
-                margin="dense"
-                required
-                fullWidth
-                name="Mobile"
-                label="Mobile"
-                type="number"
-                id="Mobile"
-                value={Mobile}
-                onChange={e => setMobile(e.target.value)}
-              />
-              <TextField
-                variant="outlined"
-                margin="dense"
-                fullWidth
-                name="email"
-                label="Email(Optional)"
-                type="email"
-                id="email"
-                value={email}
-                onChange={e => setEmail(e.target.value)}
-              />
+              <form>
+                <TextField
+                  variant="outlined"
+                  margin="dense"
+                  required
+                  fullWidth
+                  name="fullName"
+                  label="Full Name"
+                  id="fullName"
+                  autoComplete="current-password"
+                  value={fullName}
+                  onChange={e => setFullName(e.target.value)}
+                />
+                <TextField
+                  variant="outlined"
+                  margin="dense"
+                  required
+                  fullWidth
+                  name="Mobile"
+                  label="Mobile"
+                  type="number"
+                  id="Mobile"
+                  value={Mobile}
+                  onChange={e => setMobile(e.target.value)}
+                />
+                <TextField
+                  variant="outlined"
+                  margin="dense"
+                  fullWidth
+                  name="email"
+                  label="Email(Optional)"
+                  type="email"
+                  id="email"
+                  value={email}
+                  onChange={e => setEmail(e.target.value)}
+                />
 
-              <Grid container>
-                <Grid item xs>
-                  <Button
-                    disabled={fullName.length === 0 || Mobile.length === 0}
-                    style={{ marginTop: "24px" }}
-                    variant="contained"
-                    color="primary"
-                    onClick={handleJoinVideoCall}
-                  >
-                    Join Call
-                  </Button>
+                <Grid container>
+                  <Grid item xs>
+                    <Button
+                      disabled={fullName.length === 0 || Mobile.length === 0}
+                      style={{ marginTop: "24px" }}
+                      variant="contained"
+                      color="primary"
+                      onClick={handleJoinVideoCall}
+                    >
+                      Join Call
+                    </Button>
+                  </Grid>
                 </Grid>
-              </Grid>
-            </form>
+              </form>
+            </Box>
           </Box>
         </Container>
       )}
-    </div>
+    </Box>
   );
 }
 

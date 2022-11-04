@@ -50,7 +50,7 @@ export default function VideoCall(props) {
       });
 
       try {
-        await client.join(config.appId, name, config.token, null);
+        await client.join(config.appId, name, config.token, 0);
       } catch (error) {
         console.log("error");
       }
@@ -68,37 +68,40 @@ export default function VideoCall(props) {
     }
   }, [channelName, client, ready, tracks]);
 
+  console.log("users", users);
   return (
     <Box
       style={{
-        height: "95%",
-        background: "#454545",
-        borderRadius: "8px",
+        // height: "95%",
+        height: "100vh",
+        background: "#0000",
+        // borderRadius: "8px",
       }}
     >
       <Grid
         container
         direction="column"
         style={{
-          height: "95%",
-          background: "#454545",
+          height: "100vh",
+          background: "#0000",
           padding: "16px",
-          borderRadius: "8px",
+          // borderRadius: "8px",
         }}
       >
-        <Grid item style={{ height: "90%", overflow: "hide" }}>
+        <Grid item style={{ height: "83vh", overflow: "hide" }}>
           {start && tracks && (
             <Video tracks={tracks} users={users} fullName={fullName} />
           )}
         </Grid>
         {/* <Toolbar /> */}
 
-        <Grid item style={{ height: "5%" }}>
+        <Grid item style={{ height: "10%" }}>
           {ready && tracks && (
             <Controls
               tracks={tracks}
               setStart={setStart}
               setInCall={setInCall}
+              users={users}
             />
           )}
         </Grid>

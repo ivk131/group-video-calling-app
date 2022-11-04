@@ -1,6 +1,13 @@
 import { useState } from "react";
 import { useClient } from "./settings";
-import { Grid, Button, Box, IconButton, Tooltip } from "@material-ui/core";
+import {
+  Grid,
+  Button,
+  Box,
+  IconButton,
+  Tooltip,
+  Badge,
+} from "@material-ui/core";
 import MicIcon from "@material-ui/icons/Mic";
 import MicOffIcon from "@material-ui/icons/MicOff";
 import VideocamIcon from "@material-ui/icons/Videocam";
@@ -11,7 +18,7 @@ import CallEndIcon from "@material-ui/icons/CallEnd";
 
 export default function Controls(props) {
   const client = useClient();
-  const { tracks, setStart, setInCall } = props;
+  const { tracks, setStart, setInCall, users } = props;
   const [trackState, setTrackState] = useState({ video: true, audio: true });
 
   const mute = async type => {
@@ -31,6 +38,7 @@ export default function Controls(props) {
   const leaveChannel = async () => {
     await client.leave();
     client.removeAllListeners();
+    // client.remoteUsers();
     tracks[0].close();
     tracks[1].close();
     setStart(false);
@@ -55,14 +63,6 @@ export default function Controls(props) {
               {trackState.audio ? <MicIcon /> : <MicOffIcon />}
             </IconButton>
           </Tooltip>
-
-          {/* <Button
-            variant="contained"
-            color={trackState.audio ? "primary" : "secondary"}
-            onClick={() => mute("audio")}
-          >
-            {trackState.audio ? <MicIcon /> : <MicOffIcon />}
-          </Button> */}
         </Grid>
         <Grid item>
           <Tooltip title={trackState.video ? "Hide" : "Show"}>
@@ -74,14 +74,6 @@ export default function Controls(props) {
               {trackState.video ? <VideocamIcon /> : <VideocamOffIcon />}
             </IconButton>
           </Tooltip>
-
-          {/* <Button
-            variant="contained"
-            color={trackState.video ? "primary" : "secondary"}
-            onClick={() => mute("video")}
-          >
-            {trackState.video ? <VideocamIcon /> : <VideocamOffIcon />}
-          </Button> */}
         </Grid>
         <Grid item>
           <IconButton
@@ -91,22 +83,14 @@ export default function Controls(props) {
           >
             <CallEndIcon />
           </IconButton>
-          {/* <Button
-            variant="outlined"
-            color="default"
-            onClick={() => leaveChannel()}
-          >
-            Leave
-            <ExitToAppIcon />
-          </Button> */}
         </Grid>
         <Box pl={3} />
         <Grid item>
-          <Tooltip title="Participent">
-            <IconButton>
+          <IconButton>
+            <Badge badgeContent={users?.length + 1}>
               <GroupsIcon />
-            </IconButton>
-          </Tooltip>
+            </Badge>
+          </IconButton>
         </Grid>
         <Box flexGrow={0.3} />
       </Grid>

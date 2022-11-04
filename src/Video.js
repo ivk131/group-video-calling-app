@@ -7,22 +7,52 @@ export default function Video(props) {
   const [gridSpacing, setGridSpacing] = useState(12);
 
   useEffect(() => {
-    setGridSpacing(Math.max(Math.floor(12 / (users.length + 1)), 4));
+    // setGridSpacing(Math.max(Math.floor(12 / (users.length + 1)), 4));
+    setGridSpacing(Math.max(Math.floor(12 / (users.length + 1))));
     console.log("gridSpacing", gridSpacing);
   }, [users, tracks]);
 
   console.log("USERS---------------------------", users);
-
+  const totalUsers = users?.length + 1;
   return (
     <Grid container style={{ height: "100%" }} spacing={1}>
-      <Grid item xs={6} md={3} lg={2} sm={gridSpacing}>
+      <Grid
+        item
+        sm={
+          totalUsers === 1
+            ? 12
+            : null || totalUsers === 2
+            ? 6
+            : null || totalUsers === 3
+            ? 4
+            : null || totalUsers === 4
+            ? 6
+            : null || totalUsers > 4
+            ? 3
+            : null
+        }
+        xs={
+          totalUsers === 1
+            ? 12
+            : null || totalUsers === 2
+            ? 6
+            : null || totalUsers === 3
+            ? 6
+            : null || totalUsers === 4
+            ? 6
+            : null || totalUsers > 4
+            ? 6
+            : null
+        }
+        // lg={gridSpacing}
+      >
         <AgoraVideoPlayer
           videoTrack={tracks[1]}
           style={{
             height: "100%",
             width: "100%",
-            maxWidth: "250px",
-            maxHeight: "280px",
+            // maxWidth: "250px",
+            maxHeight: `${totalUsers} <= 2 ? 100%: 280px`,
 
             position: "relative",
           }}
@@ -48,10 +78,32 @@ export default function Video(props) {
             return (
               <Grid
                 item
-                xs={6}
-                lg={2}
-                md={3}
-                sm={gridSpacing}
+                sm={
+                  totalUsers === 1
+                    ? 12
+                    : null || totalUsers === 2
+                    ? 6
+                    : null || totalUsers === 3
+                    ? 4
+                    : null || totalUsers === 4
+                    ? 6
+                    : null || totalUsers > 4
+                    ? 3
+                    : null
+                }
+                xs={
+                  totalUsers === 1
+                    ? 12
+                    : null || totalUsers === 2
+                    ? 6
+                    : null || totalUsers === 3
+                    ? 6
+                    : null || totalUsers === 4
+                    ? 6
+                    : null || totalUsers > 4
+                    ? 6
+                    : null
+                }
                 style={{ minHeight: "230px", borderRadius: "16px" }}
               >
                 <AgoraVideoPlayer
@@ -63,8 +115,9 @@ export default function Video(props) {
                     width: "100%",
                     borderRadius: "16px",
                     background: "#f2f4f6",
-                    maxWidth: "250px",
-                    maxHeight: "280px",
+                    // maxWidth: "250px",
+                    // maxHeight: "280px",
+                    maxHeight: `${totalUsers} <= 2 ? 100%: 280px`,
                   }}
                 >
                   <Box
