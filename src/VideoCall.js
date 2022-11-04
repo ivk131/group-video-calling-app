@@ -20,7 +20,7 @@ export default function VideoCall(props) {
   useEffect(() => {
     let init = async (name, userName) => {
       client.on("user-published", async (user, mediaType) => {
-        user.userName = userName;
+        // user.userName = userName;
         await client.subscribe(user, mediaType);
         if (mediaType === "video") {
           setUsers(prevUsers => {

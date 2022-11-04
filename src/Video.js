@@ -11,7 +11,7 @@ export default function Video(props) {
     console.log("gridSpacing", gridSpacing);
   }, [users, tracks]);
 
-  console.log("users, tracks", users);
+  console.log("USERS---------------------------", users);
 
   return (
     <Grid container style={{ height: "100%" }} spacing={1}>
