@@ -8,6 +8,7 @@ import {
 import { Grid, Toolbar, Box } from "@material-ui/core";
 import Video from "./Video";
 import Controls from "./Controls";
+import SignUp from "./components/SignUp.js";
 
 export default function VideoCall(props) {
   const { fullName } = props;
@@ -72,12 +73,12 @@ export default function VideoCall(props) {
   return (
     <Box
       style={{
-        // height: "95%",
         height: "100vh",
         background: "#0000",
         // borderRadius: "8px",
       }}
     >
+      {/* <SignUp /> */}
       <Grid
         container
         direction="column"

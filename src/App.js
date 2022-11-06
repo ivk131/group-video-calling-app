@@ -1,104 +1,78 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@material-ui/core";
 import VideoCall from "./VideoCall";
 import {
-  Container,
-  CssBaseline,
-  Avatar,
-  TextField,
-  Paper,
-  Toolbar,
-  Grid,
-  Box,
-  Typography,
-} from "@material-ui/core";
+  BrowserRouter,
+  Routes,
+  Route,
+  Outlet,
+  Link,
+  Navigate,
+} from "react-router-dom";
+import { Container, Box, Typography } from "@material-ui/core";
+import SignUp from "./components/SignUp";
+import Login from "./components/Login";
+import WelcomeScreen from "./components/WelcomeScreen";
+
 function App() {
-  const [inCall, setInCall] = useState(false);
+  const [inCall, setInCall] = useState(true);
   const [fullName, setFullName] = useState("");
-  const [Mobile, setMobile] = useState("");
-  const [email, setEmail] = useState("");
-
-  console.log(fullName, Mobile, email);
-
+  const [isLogin, setIsLogin] = useState(false);
   const handleJoinVideoCall = () => {
     setInCall(true);
-    // setTimeout(() => {
-    //   setFullName("");
-    // }, 5000);
   };
 
+  useEffect(() => {
+    let isLogin = localStorage.getItem("isLogin");
+    setIsLogin(true);
+  }, []);
+
   return (
-    <Box className="App" style={{ height: "100vh", background: "#000" }}>
-      {inCall ? (
-        <VideoCall setInCall={setInCall} fullName={fullName} />
-      ) : (
-        <Container component="main" maxWidth="xs">
-          {/* <CssBaseline /> */}
-          <Box pt={8}>
-            <Box className="" component={Paper} p={2}>
-              <Box pb={2}>
-                <Typography component="h1" variant="h5">
-                  Virtual Call
-                </Typography>
-              </Box>
-
-              <form>
-                <TextField
-                  variant="outlined"
-                  margin="dense"
-                  required
-                  fullWidth
-                  name="fullName"
-                  label="Full Name"
-                  id="fullName"
-                  autoComplete="current-password"
-                  value={fullName}
-                  onChange={e => setFullName(e.target.value)}
-                />
-                <TextField
-                  variant="outlined"
-                  margin="dense"
-                  required
-                  fullWidth
-                  name="Mobile"
-                  label="Mobile"
-                  type="number"
-                  id="Mobile"
-                  value={Mobile}
-                  onChange={e => setMobile(e.target.value)}
-                />
-                <TextField
-                  variant="outlined"
-                  margin="dense"
-                  fullWidth
-                  name="email"
-                  label="Email(Optional)"
-                  type="email"
-                  id="email"
-                  value={email}
-                  onChange={e => setEmail(e.target.value)}
-                />
-
-                <Grid container>
-                  <Grid item xs>
-                    <Button
-                      disabled={fullName.length === 0 || Mobile.length === 0}
-                      style={{ marginTop: "24px" }}
-                      variant="contained"
-                      color="primary"
-                      onClick={handleJoinVideoCall}
-                    >
-                      Join Call
-                    </Button>
-                  </Grid>
-                </Grid>
-              </form>
-            </Box>
-          </Box>
-        </Container>
-      )}
-    </Box>
+    <BrowserRouter>
+      <Routes>
+        <Route
+          path="*"
+          element={
+            <Navigate
+              to={
+                isLogin
+                  ? "/group-video-calling-app"
+                  : "/group-video-calling-app/signup"
+              }
+              replace
+            />
+          }
+        />
+        <Route
+          path="/group-video-calling-app"
+          element={<VideoCall setInCall={setInCall} fullName={fullName} />}
+        />
+        <Route path="/group-video-calling-app/signup" element={<SignUp />} />
+        <Route path="group-video-calling-app/login" element={<Login />} />
+        <Route
+          path="group-video-calling-app/welcome"
+          element={<WelcomeScreen />}
+        />
+        <Route
+          path="/group-video-calling-app"
+          element={<VideoCall setInCall={setInCall} fullName={fullName} />}
+        />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
 export default App;
+
+{
+  /* <Box className="App" style={{ height: "100vh", background: "#000" }}>
+{inCall ? (
+  <VideoCall setInCall={setInCall} fullName={fullName} />
+) : (
+  <Container component="main" maxWidth="xs">
+    <SignUp />
+    <Login />
+  </Container>
+)}
+</Box> */
+}

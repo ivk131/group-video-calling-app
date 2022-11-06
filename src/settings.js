@@ -7,7 +7,7 @@ import { createClient, createMicrophoneAndCameraTracks } from "agora-rtc-react";
 
 const appId = "002d67ae068040be96b28ec17b115ea8";
 const token =
-  "007eJxTYPBav+zTkohJkdqTLrLNlfuhbMX6YcHOns96EZrJC8UzKtgUGAwMjFLMzBNTDcwsDEwMklItzZKMLFKTDc2TDA1NUxMt7i1JSW4IZGT4comXhZEBAkF8NoaU1PxcXUMGBgBPPh8v";
+  "007eJxTYLBa+yuqZdrdVM5di23avt/j8Hx7sCX6W7aXqK94/OwH5rMUGAwMjFLMzBNTDcwsDEwMklItzZKMLFKTDc2TDA1NUxMtih6nJzcEMjIsLtRkZmSAQBCfjSElNT9X15CBAQC+WyAW";
 export const channelName = "deom-1";
 
 export const config = { mode: "rtc", codec: "vp8", appId: appId, token: token };

@@ -15,11 +15,16 @@ import VideocamOffIcon from "@material-ui/icons/VideocamOff";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import GroupsIcon from "@material-ui/icons/GroupSharp";
 import CallEndIcon from "@material-ui/icons/CallEnd";
+import DialogModal from "./components/DialogModal";
+import { Link, Navigate } from "react-router-dom";
 
 export default function Controls(props) {
   const client = useClient();
   const { tracks, setStart, setInCall, users } = props;
   const [trackState, setTrackState] = useState({ video: true, audio: true });
+  const [open, setOpen] = useState(false);
+
+  const handleClose = () => setOpen(true);
 
   const mute = async type => {
     if (type === "audio") {
@@ -79,14 +84,17 @@ export default function Controls(props) {
           <IconButton
             variant="outlined"
             color="secondary"
-            onClick={() => leaveChannel()}
+            onClick={() => {
+              leaveChannel();
+              window.location.href = "/group-video-calling-app/welcome";
+            }}
           >
             <CallEndIcon />
           </IconButton>
         </Grid>
         <Box pl={3} />
         <Grid item>
-          <IconButton>
+          <IconButton onClick={() => setOpen(true)}>
             <Badge badgeContent={users?.length + 1}>
               <GroupsIcon />
             </Badge>
@@ -94,6 +102,12 @@ export default function Controls(props) {
         </Grid>
         <Box flexGrow={0.3} />
       </Grid>
+      <DialogModal
+        onClose={handleClose}
+        open={open}
+        setOpen={setOpen}
+        users={users}
+      />
     </Box>
   );
 }

@@ -52,9 +52,9 @@ export default function Video(props) {
             height: "100%",
             width: "100%",
             background: "#454545",
+            borderRadius: "12px",
             // maxWidth: "250px",
             maxHeight: `${totalUsers} <= 2 ? 100%: 280px`,
-
             position: "relative",
           }}
         >
@@ -114,7 +114,7 @@ export default function Video(props) {
                     position: "relative",
                     height: "100%",
                     width: "100%",
-                    borderRadius: "16px",
+                    borderRadius: "12px",
                     background: "#f2f4f6",
                     // maxWidth: "250px",
                     // maxHeight: "280px",
