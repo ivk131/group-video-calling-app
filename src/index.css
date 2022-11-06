@@ -50,3 +50,15 @@ code {
   bottom: 40px;
   right: "40%";
 }
+
+@media only screen and (max-width: 390px) {
+  .admin__video__container {
+    max-height: 50vh !important;
+  }
+}
+
+@media only screen and (max-width: 390px) {
+  .admin__video__container2 {
+    max-height: 50vh !important;
+  }
+}

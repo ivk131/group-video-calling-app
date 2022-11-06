@@ -18,6 +18,7 @@ export default function Video(props) {
     <Grid container style={{ height: "100%" }} spacing={1}>
       <Grid
         item
+        className="admin__video__container"
         sm={
           totalUsers === 1
             ? 12
@@ -79,6 +80,7 @@ export default function Video(props) {
             return (
               <Grid
                 item
+                className="admin__video__container2"
                 sm={
                   totalUsers === 1
                     ? 12
@@ -116,8 +118,7 @@ export default function Video(props) {
                     width: "100%",
                     borderRadius: "12px",
                     background: "#f2f4f6",
-                    // maxWidth: "250px",
-                    // maxHeight: "280px",
+
                     maxHeight: `${totalUsers} <= 2 ? 100%: 280px`,
                   }}
                 >
