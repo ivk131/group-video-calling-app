@@ -1,14 +1,7 @@
 import { useState, useEffect } from "react";
 import { Button } from "@material-ui/core";
 import VideoCall from "./VideoCall";
-import {
-  BrowserRouter,
-  Routes,
-  Route,
-  Outlet,
-  Link,
-  Navigate,
-} from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { Container, Box, Typography } from "@material-ui/core";
 import SignUp from "./components/SignUp";
 import Login from "./components/Login";
