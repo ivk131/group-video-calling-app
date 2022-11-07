@@ -13,11 +13,13 @@ import { Container, Box, Typography } from "@material-ui/core";
 import SignUp from "./components/SignUp";
 import Login from "./components/Login";
 import WelcomeScreen from "./components/WelcomeScreen";
+import axios from "axios";
 
 function App() {
   const [inCall, setInCall] = useState(true);
   const [fullName, setFullName] = useState("");
   const [isLogin, setIsLogin] = useState(false);
+
   const handleJoinVideoCall = () => {
     setInCall(true);
   };
@@ -63,16 +65,3 @@ function App() {
 }
 
 export default App;
-
-{
-  /* <Box className="App" style={{ height: "100vh", background: "#000" }}>
-{inCall ? (
-  <VideoCall setInCall={setInCall} fullName={fullName} />
-) : (
-  <Container component="main" maxWidth="xs">
-    <SignUp />
-    <Login />
-  </Container>
-)}
-</Box> */
-}

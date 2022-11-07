@@ -15,15 +15,6 @@ import {
 import axios from "axios";
 import { Link } from "react-router-dom";
 
-const initialValues = {
-  name: "",
-  mobile: "",
-  stateId: null,
-  districtID: null,
-  password: "",
-  confirmPassword: "",
-};
-
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
 const MenuProps = {
@@ -33,6 +24,15 @@ const MenuProps = {
       width: 250,
     },
   },
+};
+
+const initialValues = {
+  name: "",
+  mobile: "",
+  stateId: null,
+  districtID: null,
+  password: "",
+  confirmPassword: "",
 };
 
 function SignUp() {
@@ -85,6 +85,10 @@ function SignUp() {
       )
       .then(response => {
         response.data.msg === "mobile_exist" ? setError(true) : setError(false);
+        response.data.msg === "mobile_exist" &&
+          alert("Mobile Number already exits");
+
+        response.data.msg === "success" && alert("Registered Successfully");
       })
       .catch(error => {
         console.error("There was an error!", error);
