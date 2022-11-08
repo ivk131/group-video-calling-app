@@ -20,6 +20,8 @@ function Login() {
   const [inCall, setInCall] = useState(false);
   const [values, setValues] = useState(initialValues);
   const [response_userId, setResponse_userId] = useState();
+  const [userName, setUserName] = useState("");
+  const [isLogin, setIsLogin] = useState("");
   // const navigate = useNavigate();
 
   useEffect(() => {
@@ -40,6 +42,24 @@ function Login() {
 
   const handleJoinVideoCall = () => {
     setInCall(true);
+  };
+
+  const getUserProfile = async () => {
+    await axiosObj
+      .get(`/userProfile/json/${localStorage.getItem("response_userId")}/false`)
+      .then(response => {
+        console.log(
+          " getUserProfile response",
+          localStorage.setItem("name", response?.data?.workerProfile[0].name)
+          // setUserName(response.data.candidateProfile[0].name)
+        );
+        // localStorage.setItem("agoraToken", response?.data?.agoraToken);
+        // localStorage.setItem("appId", response?.data?.appId);
+        // localStorage.setItem("channelName", response?.data?.channelName);
+        // localStorage.setItem(" eventId", response?.data?.eventId);
+        // localStorage.setItem("role", response?.data?.role);
+        // console.log("getUserDetails", response.data);
+      });
   };
 
   const getUserDetails = async () => {
@@ -69,6 +89,7 @@ function Login() {
       )
       .then(response => {
         localStorage.setItem("isLogin", true);
+        setIsLogin(true);
         localStorage.setItem(
           "response_userId",
           response?.data?.response_userId
@@ -80,20 +101,26 @@ function Login() {
       });
 
     getUserDetails();
+    setTimeout(() => {
+      getUserProfile();
+    }, 3000);
     handleJoinVideoCall();
+
+    setValues({
+      mobile: "",
+      password: "",
+    });
   };
 
-  useEffect(() => {}, [
-    localStorage.getItem("isLogin"),
-    localStorage.getItem("agoraToken"),
-  ]);
+  useEffect(
+    () => {},
+    [localStorage.getItem("isLogin"), localStorage.getItem("agoraToken")],
+    [isLogin]
+  );
 
   return (
     <>
-      {localStorage.getItem("isLogin") &&
-        localStorage.getItem("agoraToken") && (
-          <Navigate to="/group-video-calling-app" replace={true} />
-        )}
+      {isLogin && <Navigate to="/group-video-calling-app" replace={true} />}
       <Container maxWidth="xs">
         <Box pt={8}>
           <Box className="" component={Paper} p={2}>

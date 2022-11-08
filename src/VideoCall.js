@@ -15,6 +15,8 @@ export default function VideoCall(props) {
   const { setInCall } = props;
   const [users, setUsers] = useState([]);
   const [start, setStart] = useState(false);
+  const [userName, setUserName] = useState("");
+
   const client = useClient();
   const { ready, tracks } = useMicrophoneAndCameraTracks();
 
@@ -67,6 +69,7 @@ export default function VideoCall(props) {
         console.log(error);
       }
     }
+    setUserName(localStorage.getItem("name"));
   }, [channelName, client, ready, tracks]);
 
   console.log("users", users);
@@ -91,7 +94,12 @@ export default function VideoCall(props) {
       >
         <Grid item style={{ height: "83vh", overflow: "hide" }}>
           {start && tracks && (
-            <Video tracks={tracks} users={users} fullName={fullName} />
+            <Video
+              tracks={tracks}
+              users={users}
+              fullName={fullName}
+              userName={userName}
+            />
           )}
         </Grid>
         {/* <Toolbar /> */}
