@@ -42,7 +42,7 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route
+        {/* <Route
           element={
             <Navigate
               to={
@@ -53,7 +53,7 @@ function App() {
               replace={true}
             />
           }
-        />
+        /> */}
         <Route
           path="/group-video-calling-app"
           element={<VideoCall setInCall={setInCall} fullName={fullName} />}
