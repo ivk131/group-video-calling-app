@@ -17,12 +17,15 @@ import GroupsIcon from "@material-ui/icons/GroupSharp";
 import CallEndIcon from "@material-ui/icons/CallEnd";
 import DialogModal from "./components/DialogModal";
 import { Link, Navigate } from "react-router-dom";
+import ScreenShareIcon from "@material-ui/icons/ScreenShare";
+import StopScreenShareIcon from "@material-ui/icons/StopScreenShare";
 
 export default function Controls(props) {
   const client = useClient();
   const { tracks, setStart, setInCall, users } = props;
   const [trackState, setTrackState] = useState({ video: true, audio: true });
   const [open, setOpen] = useState(false);
+  const [isScreenShare, setIsScreenShare] = useState(false);
 
   const handleClose = () => setOpen(true);
 
@@ -80,6 +83,19 @@ export default function Controls(props) {
             </IconButton>
           </Tooltip>
         </Grid>
+
+        <Grid item>
+          <Tooltip title={trackState.video ? "Screen Share" : "Stop share"}>
+            <IconButton
+              variant="contained"
+              // color={isScreenShare ? "primary" : "secondary"}
+              // onClick={() => mute("video")}
+            >
+              {isScreenShare ? <ScreenShareIcon /> : <StopScreenShareIcon />}
+            </IconButton>
+          </Tooltip>
+        </Grid>
+
         <Grid item>
           <IconButton
             variant="outlined"

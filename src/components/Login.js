@@ -88,13 +88,16 @@ function Login() {
         `https://iplfarmersamvad.com/CMSWSIPL/ws/userAuth/json/${values.mobile}/${values.password}`
       )
       .then(response => {
-        localStorage.setItem("isLogin", true);
-        setIsLogin(true);
-        localStorage.setItem(
-          "response_userId",
-          response?.data?.response_userId
-        );
-        response?.data?.valid === false && alert("Invalid credentails!!");
+        if (response?.data?.valid === true) {
+          localStorage.setItem("isLogin", true);
+          setIsLogin(true);
+          localStorage.setItem(
+            "response_userId",
+            response?.data?.response_userId
+          );
+        } else {
+          response?.data?.valid === false && alert("Invalid credentails!!");
+        }
       })
       .catch(error => {
         console.error("There was an error!", error);

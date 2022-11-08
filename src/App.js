@@ -59,9 +59,9 @@ function App() {
           element={<VideoCall setInCall={setInCall} fullName={fullName} />}
         />
         <Route path="/group-video-calling-app/signup" element={<SignUp />} />
-        <Route path="group-video-calling-app/login" element={<Login />} />
+        <Route path="/group-video-calling-app/login" element={<Login />} />
         <Route
-          path="group-video-calling-app/welcome"
+          path="/group-video-calling-app/welcome"
           element={<WelcomeScreen />}
         />
         {/* <Route
