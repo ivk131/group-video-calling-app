@@ -45,7 +45,7 @@ function WelcomeScreen() {
         <Box className="" component={Paper} p={2}>
           <Box pb={2}>
             <Typography component="h1" variant="h5">
-              Thank you for joining!!!
+              You're left the meeting!!!
             </Typography>
           </Box>
 
@@ -58,7 +58,7 @@ function WelcomeScreen() {
             color="primary"
             onClick={handleJoinVideoCall}
           >
-            Joining Again
+            Rejoin
           </Button>
         </Box>
       </Box>

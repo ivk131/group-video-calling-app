@@ -9,31 +9,34 @@ import { Grid, Toolbar, Box } from "@material-ui/core";
 import Video from "./Video";
 import Controls from "./Controls";
 import SignUp from "./components/SignUp.js";
+import { Link, Navigate } from "react-router-dom";
 
 export default function VideoCall(props) {
-  const { fullName } = props;
+  const { fullName, isLogin } = props;
   const { setInCall } = props;
   const [users, setUsers] = useState([]);
   const [start, setStart] = useState(false);
   const [userName, setUserName] = useState("");
+  // const [isLogin, setIsLogin] = useState(false);
 
   const client = useClient();
   const { ready, tracks } = useMicrophoneAndCameraTracks();
 
   useEffect(() => {
     let init = async (name, userName) => {
-      client.on("user-published", async (user, mediaType) => {
-        // user.userName = userName;
-        await client.subscribe(user, mediaType);
-        if (mediaType === "video") {
-          setUsers(prevUsers => {
-            return [...prevUsers, user];
-          });
-        }
-        if (mediaType === "audio") {
-          user.audioTrack.play();
-        }
-      });
+      localStorage.getItem("isLogin") &&
+        client.on("user-published", async (user, mediaType) => {
+          // user.userName = userName;
+          await client.subscribe(user, mediaType);
+          if (mediaType === "video") {
+            setUsers(prevUsers => {
+              return [...prevUsers, user];
+            });
+          }
+          if (mediaType === "audio") {
+            user.audioTrack.play();
+          }
+        });
 
       client.on("user-unpublished", (user, mediaType) => {
         if (mediaType === "audio") {
@@ -72,49 +75,50 @@ export default function VideoCall(props) {
     setUserName(localStorage.getItem("name"));
   }, [channelName, client, ready, tracks]);
 
-  console.log("users", users);
   return (
-    <Box
-      style={{
-        height: "100vh",
-        background: "#0000",
-        // borderRadius: "8px",
-      }}
-    >
-      {/* <SignUp /> */}
-      <Grid
-        container
-        direction="column"
+    <>
+      <Box
         style={{
           height: "100vh",
           background: "#0000",
-          padding: "16px",
           // borderRadius: "8px",
         }}
       >
-        <Grid item style={{ height: "83vh", overflow: "hide" }}>
-          {start && tracks && (
-            <Video
-              tracks={tracks}
-              users={users}
-              fullName={fullName}
-              userName={userName}
-            />
-          )}
-        </Grid>
-        {/* <Toolbar /> */}
+        {/* <SignUp /> */}
+        <Grid
+          container
+          direction="column"
+          style={{
+            height: "100vh",
+            background: "#0000",
+            padding: "16px",
+            // borderRadius: "8px",
+          }}
+        >
+          <Grid item style={{ height: "83vh", overflow: "hide" }}>
+            {start && tracks && (
+              <Video
+                tracks={tracks}
+                users={users}
+                fullName={fullName}
+                userName={userName}
+              />
+            )}
+          </Grid>
+          {/* <Toolbar /> */}
 
-        <Grid item style={{ height: "10%" }}>
-          {ready && tracks && (
-            <Controls
-              tracks={tracks}
-              setStart={setStart}
-              setInCall={setInCall}
-              users={users}
-            />
-          )}
+          <Grid item style={{ height: "10%" }}>
+            {ready && tracks && (
+              <Controls
+                tracks={tracks}
+                setStart={setStart}
+                setInCall={setInCall}
+                users={users}
+              />
+            )}
+          </Grid>
         </Grid>
-      </Grid>
-    </Box>
+      </Box>
+    </>
   );
 }

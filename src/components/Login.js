@@ -28,7 +28,7 @@ function Login() {
     localStorage.getItem("isLogin") && (
       <Navigate to="/group-video-calling-app" />
     );
-  }, []);
+  }, [localStorage.getItem("isLogin")]);
 
   const handleInputChange = e => {
     const { name, value } = e.target;
@@ -37,8 +37,6 @@ function Login() {
       [name]: value,
     });
   };
-
-  console.log("value", values);
 
   const handleJoinVideoCall = () => {
     setInCall(true);
@@ -51,14 +49,7 @@ function Login() {
         console.log(
           " getUserProfile response",
           localStorage.setItem("name", response?.data?.workerProfile[0].name)
-          // setUserName(response.data.candidateProfile[0].name)
         );
-        // localStorage.setItem("agoraToken", response?.data?.agoraToken);
-        // localStorage.setItem("appId", response?.data?.appId);
-        // localStorage.setItem("channelName", response?.data?.channelName);
-        // localStorage.setItem(" eventId", response?.data?.eventId);
-        // localStorage.setItem("role", response?.data?.role);
-        // console.log("getUserDetails", response.data);
       });
   };
 
@@ -107,8 +98,8 @@ function Login() {
     setTimeout(() => {
       getUserProfile();
     }, 3000);
-    handleJoinVideoCall();
 
+    localStorage.getItem("isLogin") && handleJoinVideoCall();
     setValues({
       mobile: "",
       password: "",
@@ -123,7 +114,7 @@ function Login() {
 
   return (
     <>
-      {isLogin && <Navigate to="/group-video-calling-app" replace={true} />}
+      {isLogin && <Navigate to="/group-video-calling-app" />}
       <Container maxWidth="xs">
         <Box pt={8}>
           <Box className="" component={Paper} p={2}>

@@ -20,6 +20,18 @@ import { Link, Navigate } from "react-router-dom";
 import ScreenShareIcon from "@material-ui/icons/ScreenShare";
 import StopScreenShareIcon from "@material-ui/icons/StopScreenShare";
 
+import AgoraRTC, {
+  createScreenVideoTrack,
+  ScreenVideoTrackInitConfig,
+  ILocalVideoTrack,
+  ILocalAudioTrack
+} from "agora-rtc-react";
+
+// Screen Sharing
+var isSharingEnabled = false;
+var isMuteVideo = false;
+let channelParameters;
+
 export default function Controls(props) {
   const client = useClient();
   const { tracks, setStart, setInCall, users } = props;
@@ -51,6 +63,43 @@ export default function Controls(props) {
     tracks[1].close();
     setStart(false);
     setInCall(false);
+  };
+
+  const handleScreenShare = async () => {
+    let localPlayerContainer;
+    let channelParameters = {};
+    if (isSharingEnabled == false) {
+      channelParameters.screenTrack = await AgoraRTC.createScreenVideoTrack();
+
+      console.log(
+        " channelParameters-----------------------------",
+        channelParameters
+      );
+      setIsScreenShare(true);
+      channelParameters.ILocalVideoTrack.stop();
+      await client.unpublish(channelParameters.localVideoTrack);
+      // Publish the screen track.
+      await client.publish(channelParameters.screenTrack);
+      // Play the screen track on local container.
+      channelParameters.screenTrack.play(localPlayerContainer);
+
+      // Update the screen sharing state.
+      isSharingEnabled = true;
+      console.log("isSharingEnabled", isSharingEnabled);
+    } else {
+      // Stop playing the screen track.
+      channelParameters.screenTrack.stop();
+      // Unpublish the screen track.
+      await client.unpublish(channelParameters.screenTrack);
+      // Publish the local video track.
+      await client.publish(channelParameters.localVideoTrack);
+      // Play the local video on the local container.
+      channelParameters.localVideoTrack.play(localPlayerContainer);
+      // Update the button text.
+      // document.getElementById(`inItScreen`).innerHTML = "Share Screen";
+      // Update the screen sharing state.
+      isSharingEnabled = false;
+    }
   };
 
   return (
@@ -88,8 +137,8 @@ export default function Controls(props) {
           <Tooltip title={trackState.video ? "Screen Share" : "Stop share"}>
             <IconButton
               variant="contained"
-              // color={isScreenShare ? "primary" : "secondary"}
-              // onClick={() => mute("video")}
+              color={!isScreenShare ? "primary" : "secondary"}
+              onClick={handleScreenShare}
             >
               {isScreenShare ? <ScreenShareIcon /> : <StopScreenShareIcon />}
             </IconButton>
