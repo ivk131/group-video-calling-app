@@ -1,20 +1,20 @@
 {
   "files": {
     "main.css": "/group-video-calling-app/static/css/main.05ea12b4.chunk.css",
-    "main.js": "/group-video-calling-app/static/js/main.54a2bd86.chunk.js",
-    "main.js.map": "/group-video-calling-app/static/js/main.54a2bd86.chunk.js.map",
+    "main.js": "/group-video-calling-app/static/js/main.568c74bc.chunk.js",
+    "main.js.map": "/group-video-calling-app/static/js/main.568c74bc.chunk.js.map",
     "runtime-main.js": "/group-video-calling-app/static/js/runtime-main.88af9cb6.js",
     "runtime-main.js.map": "/group-video-calling-app/static/js/runtime-main.88af9cb6.js.map",
-    "static/js/2.37e4c362.chunk.js": "/group-video-calling-app/static/js/2.37e4c362.chunk.js",
-    "static/js/2.37e4c362.chunk.js.map": "/group-video-calling-app/static/js/2.37e4c362.chunk.js.map",
+    "static/js/2.ad952557.chunk.js": "/group-video-calling-app/static/js/2.ad952557.chunk.js",
+    "static/js/2.ad952557.chunk.js.map": "/group-video-calling-app/static/js/2.ad952557.chunk.js.map",
     "index.html": "/group-video-calling-app/index.html",
     "static/css/main.05ea12b4.chunk.css.map": "/group-video-calling-app/static/css/main.05ea12b4.chunk.css.map",
-    "static/js/2.37e4c362.chunk.js.LICENSE.txt": "/group-video-calling-app/static/js/2.37e4c362.chunk.js.LICENSE.txt"
+    "static/js/2.ad952557.chunk.js.LICENSE.txt": "/group-video-calling-app/static/js/2.ad952557.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.88af9cb6.js",
-    "static/js/2.37e4c362.chunk.js",
+    "static/js/2.ad952557.chunk.js",
     "static/css/main.05ea12b4.chunk.css",
-    "static/js/main.54a2bd86.chunk.js"
+    "static/js/main.568c74bc.chunk.js"
   ]
 }
