@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useClient } from "./settings";
 import {
   Grid,
@@ -44,19 +44,23 @@ import AgoraRTC, {
   VideoPlayerConfig,
 } from "agora-rtc-sdk-ng";
 
-// Screen Sharing
-var isSharingEnabled = false;
-var isMuteVideo = false;
-let channelParameters;
-
 export default function Controls(props) {
   const client = useClient();
   const { tracks, setStart, setInCall, users } = props;
   const [trackState, setTrackState] = useState({ video: true, audio: true });
   const [open, setOpen] = useState(false);
-  const [isScreenShare, setIsScreenShare] = useState(false);
+  const [isSharingEnabled, setisSharingEnabled] = useState(false);
 
   const handleClose = () => setOpen(true);
+
+  const channelParameters = {
+    localAudioTrack: null,
+    localVideoTrack: null,
+    remoteAudioTrack: null,
+    remoteVideoTrack: null,
+    remoteUid: null,
+    screenTrack: null,
+  };
 
   const mute = async type => {
     if (type === "audio") {
@@ -83,44 +87,41 @@ export default function Controls(props) {
   };
 
   const handleScreenShare = async () => {
-    let localPlayerContainer;
-    let withAudio = "enable" | "disable" | "auto";
-    let channelParameters = {};
+    const remotePlayerContainer = document.getElementById(
+      "remotePlayerContainer"
+    );
+
+    const localPlayerContainer = document.getElementById(
+      "localPlayerContainer"
+    );
+
     if (isSharingEnabled == false) {
-      channelParameters.screenTrack = await AgoraRTC.createScreenVideoTrack(
-        ScreenVideoTrackInitConfig,
-        withAudio
-      );
-      channelParameters = await AgoraRTC.createScreenVideoTrack();
+      channelParameters.screenTrack = await AgoraRTC.createScreenVideoTrack();
+
       console.log("channelParameters", channelParameters.screenTrack);
 
-      console.log(
-        " channelParameters-----------------------------",
-        channelParameters
-      );
-      setIsScreenShare(true);
-      // channelParameters.ILocalVideoTrack.stop();
+      setisSharingEnabled(true);
+      // channelParameters.localVideoTrack.stop();
+
       await client.unpublish(channelParameters.localVideoTrack);
       // Publish the screen track.
+
       await client.publish(channelParameters.screenTrack);
       // Play the screen track on local container.
-      channelParameters.screenTrack.play(localPlayerContainer);
 
-      // Update the screen sharing state.
-      isSharingEnabled = true;
+      console.log(
+        " channelParameters.screenTrack============ 7",
+        channelParameters
+      );
+      // channelParameters.screenTrack.play(localPlayerContainer);
+
+      setisSharingEnabled(true);
       console.log("isSharingEnabled", isSharingEnabled);
     } else {
-      // Stop playing the screen track.
       channelParameters.screenTrack.stop();
-      // Unpublish the screen track.
       await client.unpublish(channelParameters.screenTrack);
-      // Publish the local video track.
       await client.publish(channelParameters.localVideoTrack);
-      // Play the local video on the local container.
       channelParameters.localVideoTrack.play(localPlayerContainer);
-      // Update the button text.
-      // document.getElementById(`inItScreen`).innerHTML = "Share Screen";
-      // Update the screen sharing state.
       isSharingEnabled = false;
     }
   };
@@ -160,10 +161,10 @@ export default function Controls(props) {
           <Tooltip title={trackState.video ? "Screen Share" : "Stop share"}>
             <IconButton
               variant="contained"
-              color={!isScreenShare ? "primary" : "secondary"}
+              color={!isSharingEnabled ? "primary" : "secondary"}
               onClick={handleScreenShare}
             >
-              {isScreenShare ? <ScreenShareIcon /> : <StopScreenShareIcon />}
+              {isSharingEnabled ? <ScreenShareIcon /> : <StopScreenShareIcon />}
             </IconButton>
           </Tooltip>
         </Grid>
