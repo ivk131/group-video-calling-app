@@ -20,12 +20,29 @@ import { Link, Navigate } from "react-router-dom";
 import ScreenShareIcon from "@material-ui/icons/ScreenShare";
 import StopScreenShareIcon from "@material-ui/icons/StopScreenShare";
 
+import // createScreenVideoTrack,
+// ScreenVideoTrackInitConfig,
+// ILocalVideoTrack,
+// ILocalAudioTrack,
+"agora-rtc-react";
+
 import AgoraRTC, {
-  createScreenVideoTrack,
-  ScreenVideoTrackInitConfig,
+  BufferSourceAudioTrackInitConfig,
+  CameraVideoTrackInitConfig,
+  ClientConfig,
+  CustomAudioTrackInitConfig,
+  CustomVideoTrackInitConfig,
+  IAgoraRTCClient,
+  IBufferSourceAudioTrack,
+  ICameraVideoTrack,
+  ILocalAudioTrack,
   ILocalVideoTrack,
-  ILocalAudioTrack
-} from "agora-rtc-react";
+  IMicrophoneAudioTrack,
+  IRemoteVideoTrack,
+  MicrophoneAudioTrackInitConfig,
+  ScreenVideoTrackInitConfig,
+  VideoPlayerConfig,
+} from "agora-rtc-sdk-ng";
 
 // Screen Sharing
 var isSharingEnabled = false;
@@ -67,16 +84,22 @@ export default function Controls(props) {
 
   const handleScreenShare = async () => {
     let localPlayerContainer;
+    let withAudio = "enable" | "disable" | "auto";
     let channelParameters = {};
     if (isSharingEnabled == false) {
-      channelParameters.screenTrack = await AgoraRTC.createScreenVideoTrack();
+      channelParameters.screenTrack = await AgoraRTC.createScreenVideoTrack(
+        ScreenVideoTrackInitConfig,
+        withAudio
+      );
+      channelParameters = await AgoraRTC.createScreenVideoTrack();
+      console.log("channelParameters", channelParameters.screenTrack);
 
       console.log(
         " channelParameters-----------------------------",
         channelParameters
       );
       setIsScreenShare(true);
-      channelParameters.ILocalVideoTrack.stop();
+      // channelParameters.ILocalVideoTrack.stop();
       await client.unpublish(channelParameters.localVideoTrack);
       // Publish the screen track.
       await client.publish(channelParameters.screenTrack);
