@@ -1,7 +1,5 @@
 import React from "react";
-import DialogTitle from "@material-ui/core/DialogTitle";
 import Dialog from "@material-ui/core/Dialog";
-import Box from "@material-ui/core/Box";
 import { DialogContent, ListItem, ListItemText } from "@material-ui/core";
 
 function DialogModal({ open, setOpen, handleClose, users }) {
