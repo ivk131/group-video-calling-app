@@ -108,6 +108,10 @@ export default function Controls(props) {
       "localPlayerContainer"
     );
 
+    const localPlayerContainer__screen = document.getElementById(
+      "localPlayerContainer__screen"
+    );
+
     if (isSharingEnabled == false) {
       channelParameters.screenTrack = await AgoraRTC.createScreenVideoTrack();
 
@@ -126,15 +130,18 @@ export default function Controls(props) {
         " channelParameters.screenTrack============ 7",
         channelParameters
       );
+      // channelParameters.localVideoTrack.play(localPlayerContainer__screen);
+
       // channelParameters.screenTrack.play(localPlayerContainer);
 
       setisSharingEnabled(true);
       console.log("isSharingEnabled", isSharingEnabled);
     } else {
+      console.log("screen track line 140", channelParameters.screenTrack);
       channelParameters.screenTrack.stop();
       await client.unpublish(channelParameters.screenTrack);
       await client.publish(channelParameters.localVideoTrack);
-      channelParameters.localVideoTrack.play(localPlayerContainer);
+      channelParameters.localVideoTrack.play(localPlayerContainer__screen);
       isSharingEnabled = false;
     }
   };
