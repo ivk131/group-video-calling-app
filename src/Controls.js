@@ -44,7 +44,6 @@ import AgoraRTC, {
   IRemoteVideoTrack,
   MicrophoneAudioTrackInitConfig,
   ScreenVideoTrackInitConfig,
-  VideoPlayerConfig,
 } from "agora-rtc-sdk-ng";
 
 const styles = makeStyles(theme => ({
