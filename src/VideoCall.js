@@ -26,7 +26,6 @@ export default function VideoCall(props) {
     let init = async (name, userName) => {
       localStorage.getItem("isLogin") &&
         client.on("user-published", async (user, mediaType) => {
-          // user.userName = userName;
           await client.subscribe(user, mediaType);
           if (mediaType === "video") {
             setUsers(prevUsers => {
@@ -79,6 +78,8 @@ export default function VideoCall(props) {
     }
     setUserName(localStorage.getItem("name"));
   }, [channelName, client, ready, tracks]);
+
+  console.log("users-----------------------------------------", users);
 
   return (
     <>

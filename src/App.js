@@ -17,7 +17,6 @@ function App() {
 
   useEffect(() => {
     const query = ref(db, "events");
-    console.log("query=============================", query);
     return onValue(query, snapshort => {
       const data = snapshort.val();
 

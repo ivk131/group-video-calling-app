@@ -20,9 +20,7 @@ function Login() {
   const [inCall, setInCall] = useState(false);
   const [values, setValues] = useState(initialValues);
   const [response_userId, setResponse_userId] = useState();
-  const [userName, setUserName] = useState("");
   const [isLogin, setIsLogin] = useState("");
-  // const navigate = useNavigate();
 
   useEffect(() => {
     localStorage.getItem("isLogin") && (

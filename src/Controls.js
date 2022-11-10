@@ -6,7 +6,10 @@ import {
   Box,
   IconButton,
   Tooltip,
+  Divider,
   Badge,
+  makeStyles,
+  Typography,
 } from "@material-ui/core";
 import MicIcon from "@material-ui/icons/Mic";
 import MicOffIcon from "@material-ui/icons/MicOff";
@@ -44,12 +47,22 @@ import AgoraRTC, {
   VideoPlayerConfig,
 } from "agora-rtc-sdk-ng";
 
+const styles = makeStyles(theme => ({
+  iconsContainer: {
+    display: "flex",
+    alignItems: "center",
+    flexDirection: "column",
+  },
+}));
+
 export default function Controls(props) {
   const client = useClient();
   const { tracks, setStart, setInCall, users } = props;
   const [trackState, setTrackState] = useState({ video: true, audio: true });
   const [open, setOpen] = useState(false);
   const [isSharingEnabled, setisSharingEnabled] = useState(false);
+  const [isMuteAll, setisMuteAll] = useState(false);
+  const classes = styles();
 
   const handleClose = () => setOpen(true);
 
@@ -129,74 +142,133 @@ export default function Controls(props) {
   return (
     <Box
       style={{ background: "#f2f4f6", borderRadius: "8px" }}
-      p={2}
+      p={1}
       justifyContent="center"
     >
-      <Grid container spacing={2} alignItems="center">
-        <Box flexGrow={0.5} />
-        <Grid item>
-          <Tooltip title={trackState.audio ? "Mute" : "Unmute"}>
+      <Grid
+        container
+        spacing={1}
+        alignItems="center"
+        display="flex"
+        justify="center"
+      >
+        <Grid item xs={4} sm={1} textAlign="center">
+          <Box className={classes.iconsContainer}>
             <IconButton
               variant="contained"
-              color={trackState.audio ? "primary" : "secondary"}
+              color={trackState.audio ? "primary" : ""}
               onClick={() => mute("audio")}
             >
               {trackState.audio ? <MicIcon /> : <MicOffIcon />}
             </IconButton>
-          </Tooltip>
+
+            <Box>
+              <Typography variant="body2">
+                {trackState.audio ? "Mute" : "Unmute"}
+              </Typography>
+            </Box>
+          </Box>
         </Grid>
-        <Grid item>
-          <Tooltip title={trackState.video ? "Hide" : "Show"}>
+
+        <Grid item xs={4} sm={1}>
+          <Box className={classes.iconsContainer}>
             <IconButton
               variant="contained"
-              color={trackState.video ? "primary" : "secondary"}
+              color={!isMuteAll ? "primary" : ""}
+              // onClick={() => mute("audio")}
+              onClick={() => setisMuteAll(!isMuteAll)}
+            >
+              {!isMuteAll ? <MicIcon /> : <MicOffIcon />}
+            </IconButton>
+
+            <Box>
+              <Typography variant="body2">
+                {!isMuteAll ? "Mute All" : "Unmute all"}
+              </Typography>
+            </Box>
+          </Box>
+        </Grid>
+
+        <Grid item xs={4} sm={1}>
+          <Box className={classes.iconsContainer}>
+            <IconButton
+              variant="contained"
+              color={trackState.video ? "primary" : ""}
               onClick={() => mute("video")}
             >
               {trackState.video ? <VideocamIcon /> : <VideocamOffIcon />}
             </IconButton>
-          </Tooltip>
+
+            <Box>
+              <Typography variant="body2">
+                {trackState.video ? "Show" : "Hide"}
+              </Typography>
+            </Box>
+          </Box>
         </Grid>
 
-        <Grid item>
-          <Tooltip title={trackState.video ? "Screen Share" : "Stop share"}>
+        <Grid item xs={4} sm={1}>
+          <Box className={classes.iconsContainer}>
             <IconButton
               variant="contained"
-              color={!isSharingEnabled ? "primary" : "secondary"}
+              color={isSharingEnabled ? "primary" : ""}
               onClick={handleScreenShare}
             >
-              {isSharingEnabled ? <ScreenShareIcon /> : <StopScreenShareIcon />}
+              {!isSharingEnabled ? (
+                <ScreenShareIcon />
+              ) : (
+                <StopScreenShareIcon />
+              )}
             </IconButton>
-          </Tooltip>
+
+            <Box>
+              <Typography variant="body2">
+                {!isSharingEnabled ? "Share" : "Stop"}
+              </Typography>
+            </Box>
+          </Box>
         </Grid>
 
-        <Grid item>
-          <IconButton
-            variant="outlined"
-            color="secondary"
-            onClick={() => {
-              leaveChannel();
-              window.location.href = "/group-video-calling-app/welcome";
-            }}
-          >
-            <CallEndIcon />
-          </IconButton>
+        <Grid item xs={4} sm={1}>
+          <Box className={classes.iconsContainer}>
+            <IconButton
+              variant="outlined"
+              color="secondary"
+              onClick={() => {
+                leaveChannel();
+                window.location.href = "/group-video-calling-app/welcome";
+              }}
+            >
+              <CallEndIcon />
+            </IconButton>
+            <Box>
+              <Typography variant="body2">Hang call</Typography>
+            </Box>
+          </Box>
         </Grid>
-        <Box pl={3} />
-        <Grid item>
-          <IconButton onClick={() => setOpen(true)}>
-            <Badge badgeContent={users?.length + 1}>
-              <GroupsIcon />
-            </Badge>
-          </IconButton>
+        {/* <Box pl={3} /> */}
+        <Grid item xs={4} sm={1}>
+          <Box className={classes.iconsContainer}>
+            <IconButton>
+              <Badge badgeContent={users?.length + 1}>
+                <GroupsIcon />
+              </Badge>
+            </IconButton>
+            <Box>
+              <Typography variant="body2">Groups</Typography>
+            </Box>
+          </Box>
         </Grid>
-        <Box flexGrow={0.3} />
       </Grid>
+      {/* <Divider orientation="vertical" variant="middle" flexItem /> */}
+
+      {/* 
       <DialogModal
         onClose={handleClose}
         open={open}
         setOpen={setOpen}
         users={users}
-      />
+      /> */}
     </Box>
   );
 }
