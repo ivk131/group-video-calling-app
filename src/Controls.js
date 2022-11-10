@@ -163,7 +163,10 @@ export default function Controls(props) {
             </IconButton>
 
             <Box>
-              <Typography variant="body2">
+              <Typography
+                variant="body2"
+                color={trackState.audio ? "primary" : ""}
+              >
                 {trackState.audio ? "Mute" : "Unmute"}
               </Typography>
             </Box>
@@ -200,7 +203,10 @@ export default function Controls(props) {
             </IconButton>
 
             <Box>
-              <Typography variant="body2">
+              <Typography
+                variant="body2"
+                color={trackState.video ? "primary" : ""}
+              >
                 {trackState.video ? "Show" : "Hide"}
               </Typography>
             </Box>
@@ -242,7 +248,9 @@ export default function Controls(props) {
               <CallEndIcon />
             </IconButton>
             <Box>
-              <Typography variant="body2">Hang call</Typography>
+              <Typography variant="body2" color="secondary">
+                Hang call
+              </Typography>
             </Box>
           </Box>
         </Grid>

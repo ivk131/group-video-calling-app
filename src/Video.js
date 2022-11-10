@@ -49,6 +49,7 @@ export default function Video(props) {
       >
         <AgoraVideoPlayer
           videoTrack={tracks[1]}
+          id="localPlayerContainer"
           style={{
             height: "100%",
             width: "100%",
