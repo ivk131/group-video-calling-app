@@ -28,12 +28,34 @@ export default function VideoCall(props) {
   const client = useClient();
   const { ready, tracks } = useMicrophoneAndCameraTracks();
 
+  const Push = async user => {
+    const res = await fetch(
+      "https://agora-vc-default-rtdb.firebaseio.com/auidiences.json",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          auidiences: user,
+        }),
+      }
+    );
+
+    if (res) {
+      console.log("Data Stored", res);
+    } else {
+      alert("Something went worng!!!");
+    }
+  };
+
   useEffect(() => {
     let init = async (name, userName) => {
       localStorage.getItem("isLogin") &&
         client.on("user-published", async (user, mediaType) => {
           await client.subscribe(user, mediaType);
           if (mediaType === "video") {
+            Push(user);
             setUsers(prevUsers => {
               return [...prevUsers, user];
             });
