@@ -12,12 +12,17 @@ import SignUp from "./components/SignUp.js";
 import { Link, Navigate } from "react-router-dom";
 import axios from "axios";
 
+// Connect with firebase
+import { db } from "./utils/firebase";
+import { onValue, ref } from "firebase/database";
+
 export default function VideoCall(props) {
   const { fullName, isLogin } = props;
   const { setInCall } = props;
   const [users, setUsers] = useState([]);
   const [start, setStart] = useState(false);
   const [userName, setUserName] = useState("");
+  const [auidiences, setAuidiences] = useState([]);
   // const [isLogin, setIsLogin] = useState(false);
 
   const client = useClient();
@@ -81,6 +86,19 @@ export default function VideoCall(props) {
   }, [channelName, client, ready, tracks]);
 
   console.log("users-----------------------------------------", users);
+
+  useEffect(() => {
+    const query = ref(db, "database__name");
+    return onValue(query, snapshot => {
+      const data = snapshot.val();
+
+      if (snapshot.exists()) {
+        Object.values(data).map(auidience => {
+          setAuidiences(auidience => [...auidiences, auidience]);
+        });
+      }
+    });
+  }, []);
 
   return (
     <>

@@ -10,6 +10,8 @@ import {
 import axios from "axios";
 import { Link, Navigate } from "react-router-dom";
 import axiosObj from "../axios";
+import { db } from "../utils/firebase";
+import { onValue, push, ref } from "firebase/database";
 
 const initialValues = {
   mobile: "",
@@ -38,6 +40,30 @@ function Login() {
 
   const handleJoinVideoCall = () => {
     setInCall(true);
+  };
+
+  const Push = async () => {
+    const { mobile, password } = values;
+
+    const res = await fetch(
+      "https://agora-vc-default-rtdb.firebaseio.com/users.json",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          mobile,
+          password,
+        }),
+      }
+    );
+
+    if (res) {
+      console.log("Data Stored", res);
+    } else {
+      alert("Something went worng!!!");
+    }
   };
 
   const getUserProfile = async () => {
@@ -84,6 +110,7 @@ function Login() {
             "response_userId",
             response?.data?.response_userId
           );
+          Push();
         } else {
           response?.data?.valid === false && alert("Invalid credentails!!");
         }
